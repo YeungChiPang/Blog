@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fun.trip2.blog.dao.LinkForwordDao">
+
+    <resultMap type="fun.trip2.blog.entity.LinkForword" id="LinkForwordMap">
+        <result property="linkId" column="link_id" jdbcType="INTEGER"/>
+        <result property="linkName" column="link_name" jdbcType="VARCHAR"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+        <result property="linkType" column="link_type" jdbcType="VARCHAR"/>
+        <result property="linkDesc" column="link_desc" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="amendDate" column="amend_date" jdbcType="TIMESTAMP"/>
+        <result property="deleteFlag" column="delete_flag" jdbcType="VARCHAR"/>
+        <result property="priority" column="priority" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="LinkForwordMap">
+        select
+          link_id, link_name, url, link_type, link_desc, create_date, amend_date, delete_flag, priority
+        from blog.tbl_link_forword
+        where link_id = #{linkId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="LinkForwordMap">
+        select
+          link_id, link_name, url, link_type, link_desc, create_date, amend_date, delete_flag, priority
+        from blog.tbl_link_forword
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="LinkForwordMap">
+        select
+          link_id, link_name, url, link_type, link_desc, create_date, amend_date, delete_flag, priority
+        from blog.tbl_link_forword
+        <where>
+            <if test="linkId != null">
+                and link_id = #{linkId}
+            </if>
+            <if test="linkName != null and linkName != ''">
+                and link_name = #{linkName}
+            </if>
+            <if test="url != null and url != ''">
+                and url = #{url}
+            </if>
+            <if test="linkType != null and linkType != ''">
+                and link_type = #{linkType}
+            </if>
+            <if test="linkDesc != null and linkDesc != ''">
+                and link_desc = #{linkDesc}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="amendDate != null">
+                and amend_date = #{amendDate}
+            </if>
+            <if test="deleteFlag != null and deleteFlag != ''">
+                and delete_flag = #{deleteFlag}
+            </if>
+            <if test="priority != null and priority != ''">
+                and priority = #{priority}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="linkId" useGeneratedKeys="true">
+        insert into blog.tbl_link_forword(link_name, url, link_type, link_desc, create_date, amend_date, delete_flag, priority)
+        values (#{linkName}, #{url}, #{linkType}, #{linkDesc}, #{createDate}, #{amendDate}, #{deleteFlag}, #{priority})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update blog.tbl_link_forword
+        <set>
+            <if test="linkName != null and linkName != ''">
+                link_name = #{linkName},
+            </if>
+            <if test="url != null and url != ''">
+                url = #{url},
+            </if>
+            <if test="linkType != null and linkType != ''">
+                link_type = #{linkType},
+            </if>
+            <if test="linkDesc != null and linkDesc != ''">
+                link_desc = #{linkDesc},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="amendDate != null">
+                amend_date = #{amendDate},
+            </if>
+            <if test="deleteFlag != null and deleteFlag != ''">
+                delete_flag = #{deleteFlag},
+            </if>
+            <if test="priority != null and priority != ''">
+                priority = #{priority},
+            </if>
+        </set>
+        where link_id = #{linkId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from blog.tbl_link_forword where link_id = #{linkId}
+    </delete>
+
+</mapper>

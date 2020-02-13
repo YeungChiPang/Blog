@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fun.trip2.blog.dao.ConfigDao">
+
+    <resultMap type="fun.trip2.blog.entity.Config" id="ConfigMap">
+        <result property="configType" column="config_type" jdbcType="VARCHAR"/>
+        <result property="configName" column="config_name" jdbcType="VARCHAR"/>
+        <result property="configValue" column="config_value" jdbcType="VARCHAR"/>
+        <result property="configDesc" column="config_desc" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="amendDate" column="amend_date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ConfigMap">
+        select
+          config_type, config_name, config_value, config_desc, create_date, amend_date
+        from blog.tbl_config
+        where  = #{}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ConfigMap">
+        select
+          config_type, config_name, config_value, config_desc, create_date, amend_date
+        from blog.tbl_config
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ConfigMap">
+        select
+          config_type, config_name, config_value, config_desc, create_date, amend_date
+        from blog.tbl_config
+        <where>
+            <if test="configType != null and configType != ''">
+                and config_type = #{configType}
+            </if>
+            <if test="configName != null and configName != ''">
+                and config_name = #{configName}
+            </if>
+            <if test="configValue != null and configValue != ''">
+                and config_value = #{configValue}
+            </if>
+            <if test="configDesc != null and configDesc != ''">
+                and config_desc = #{configDesc}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="amendDate != null">
+                and amend_date = #{amendDate}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="" useGeneratedKeys="true">
+        insert into blog.tbl_config(config_type, config_name, config_value, config_desc, create_date, amend_date)
+        values (#{configType}, #{configName}, #{configValue}, #{configDesc}, #{createDate}, #{amendDate})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update blog.tbl_config
+        <set>
+            <if test="configType != null and configType != ''">
+                config_type = #{configType},
+            </if>
+            <if test="configName != null and configName != ''">
+                config_name = #{configName},
+            </if>
+            <if test="configValue != null and configValue != ''">
+                config_value = #{configValue},
+            </if>
+            <if test="configDesc != null and configDesc != ''">
+                config_desc = #{configDesc},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="amendDate != null">
+                amend_date = #{amendDate},
+            </if>
+        </set>
+        where  = #{}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from blog.tbl_config where  = #{}
+    </delete>
+
+</mapper>

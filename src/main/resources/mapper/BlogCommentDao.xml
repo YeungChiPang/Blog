@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fun.trip2.blog.dao.BlogCommentDao">
+
+    <resultMap type="fun.trip2.blog.entity.BlogComment" id="BlogCommentMap">
+        <result property="cId" column="c_id" jdbcType="INTEGER"/>
+        <result property="blogId" column="blog_id" jdbcType="INTEGER"/>
+        <result property="cName" column="c_name" jdbcType="VARCHAR"/>
+        <result property="cEmail" column="c_email" jdbcType="VARCHAR"/>
+        <result property="cWebsite" column="c_website" jdbcType="VARCHAR"/>
+        <result property="cContent" column="c_content" jdbcType="VARCHAR"/>
+        <result property="cIp" column="c_ip" jdbcType="VARCHAR"/>
+        <result property="cCreateDate" column="c_create_date" jdbcType="TIMESTAMP"/>
+        <result property="cStatus" column="c_status" jdbcType="VARCHAR"/>
+        <result property="replyFlag" column="reply_flag" jdbcType="VARCHAR"/>
+        <result property="replyCId" column="reply_c_id" jdbcType="INTEGER"/>
+        <result property="deleteFlag" column="delete_flag" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BlogCommentMap">
+        select
+          c_id, blog_id, c_name, c_email, c_website, c_content, c_ip, c_create_date, c_status, reply_flag, reply_c_id, delete_flag
+        from blog.tbl_blog_comment
+        where c_id = #{cId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BlogCommentMap">
+        select
+          c_id, blog_id, c_name, c_email, c_website, c_content, c_ip, c_create_date, c_status, reply_flag, reply_c_id, delete_flag
+        from blog.tbl_blog_comment
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BlogCommentMap">
+        select
+          c_id, blog_id, c_name, c_email, c_website, c_content, c_ip, c_create_date, c_status, reply_flag, reply_c_id, delete_flag
+        from blog.tbl_blog_comment
+        <where>
+            <if test="cId != null">
+                and c_id = #{cId}
+            </if>
+            <if test="blogId != null">
+                and blog_id = #{blogId}
+            </if>
+            <if test="cName != null and cName != ''">
+                and c_name = #{cName}
+            </if>
+            <if test="cEmail != null and cEmail != ''">
+                and c_email = #{cEmail}
+            </if>
+            <if test="cWebsite != null and cWebsite != ''">
+                and c_website = #{cWebsite}
+            </if>
+            <if test="cContent != null and cContent != ''">
+                and c_content = #{cContent}
+            </if>
+            <if test="cIp != null and cIp != ''">
+                and c_ip = #{cIp}
+            </if>
+            <if test="cCreateDate != null">
+                and c_create_date = #{cCreateDate}
+            </if>
+            <if test="cStatus != null and cStatus != ''">
+                and c_status = #{cStatus}
+            </if>
+            <if test="replyFlag != null and replyFlag != ''">
+                and reply_flag = #{replyFlag}
+            </if>
+            <if test="replyCId != null">
+                and reply_c_id = #{replyCId}
+            </if>
+            <if test="deleteFlag != null and deleteFlag != ''">
+                and delete_flag = #{deleteFlag}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="cId" useGeneratedKeys="true">
+        insert into blog.tbl_blog_comment(blog_id, c_name, c_email, c_website, c_content, c_ip, c_create_date, c_status, reply_flag, reply_c_id, delete_flag)
+        values (#{blogId}, #{cName}, #{cEmail}, #{cWebsite}, #{cContent}, #{cIp}, #{cCreateDate}, #{cStatus}, #{replyFlag}, #{replyCId}, #{deleteFlag})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update blog.tbl_blog_comment
+        <set>
+            <if test="blogId != null">
+                blog_id = #{blogId},
+            </if>
+            <if test="cName != null and cName != ''">
+                c_name = #{cName},
+            </if>
+            <if test="cEmail != null and cEmail != ''">
+                c_email = #{cEmail},
+            </if>
+            <if test="cWebsite != null and cWebsite != ''">
+                c_website = #{cWebsite},
+            </if>
+            <if test="cContent != null and cContent != ''">
+                c_content = #{cContent},
+            </if>
+            <if test="cIp != null and cIp != ''">
+                c_ip = #{cIp},
+            </if>
+            <if test="cCreateDate != null">
+                c_create_date = #{cCreateDate},
+            </if>
+            <if test="cStatus != null and cStatus != ''">
+                c_status = #{cStatus},
+            </if>
+            <if test="replyFlag != null and replyFlag != ''">
+                reply_flag = #{replyFlag},
+            </if>
+            <if test="replyCId != null">
+                reply_c_id = #{replyCId},
+            </if>
+            <if test="deleteFlag != null and deleteFlag != ''">
+                delete_flag = #{deleteFlag},
+            </if>
+        </set>
+        where c_id = #{cId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from blog.tbl_blog_comment where c_id = #{cId}
+    </delete>
+
+</mapper>

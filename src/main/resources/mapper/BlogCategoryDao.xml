@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fun.trip2.blog.dao.BlogCategoryDao">
+
+    <resultMap type="fun.trip2.blog.entity.BlogCategory" id="BlogCategoryMap">
+        <result property="catId" column="cat_id" jdbcType="INTEGER"/>
+        <result property="catName" column="cat_name" jdbcType="VARCHAR"/>
+        <result property="catDesc" column="cat_desc" jdbcType="VARCHAR"/>
+        <result property="catIcon" column="cat_icon" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="deleteFlag" column="delete_flag" jdbcType="VARCHAR"/>
+        <result property="priority" column="priority" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BlogCategoryMap">
+        select
+          cat_id, cat_name, cat_desc, cat_icon, create_date, delete_flag, priority
+        from blog.tbl_blog_category
+        where cat_id = #{catId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BlogCategoryMap">
+        select
+          cat_id, cat_name, cat_desc, cat_icon, create_date, delete_flag, priority
+        from blog.tbl_blog_category
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BlogCategoryMap">
+        select
+          cat_id, cat_name, cat_desc, cat_icon, create_date, delete_flag, priority
+        from blog.tbl_blog_category
+        <where>
+            <if test="catId != null">
+                and cat_id = #{catId}
+            </if>
+            <if test="catName != null and catName != ''">
+                and cat_name = #{catName}
+            </if>
+            <if test="catDesc != null and catDesc != ''">
+                and cat_desc = #{catDesc}
+            </if>
+            <if test="catIcon != null and catIcon != ''">
+                and cat_icon = #{catIcon}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="deleteFlag != null and deleteFlag != ''">
+                and delete_flag = #{deleteFlag}
+            </if>
+            <if test="priority != null and priority != ''">
+                and priority = #{priority}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="catId" useGeneratedKeys="true">
+        insert into blog.tbl_blog_category(cat_name, cat_desc, cat_icon, create_date, delete_flag, priority)
+        values (#{catName}, #{catDesc}, #{catIcon}, #{createDate}, #{deleteFlag}, #{priority})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update blog.tbl_blog_category
+        <set>
+            <if test="catName != null and catName != ''">
+                cat_name = #{catName},
+            </if>
+            <if test="catDesc != null and catDesc != ''">
+                cat_desc = #{catDesc},
+            </if>
+            <if test="catIcon != null and catIcon != ''">
+                cat_icon = #{catIcon},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="deleteFlag != null and deleteFlag != ''">
+                delete_flag = #{deleteFlag},
+            </if>
+            <if test="priority != null and priority != ''">
+                priority = #{priority},
+            </if>
+        </set>
+        where cat_id = #{catId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from blog.tbl_blog_category where cat_id = #{catId}
+    </delete>
+
+</mapper>
