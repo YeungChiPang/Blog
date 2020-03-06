@@ -11,15 +11,6 @@ import java.util.List;
  * @since 2020-02-11 09:26:57
  */
 public interface ConfigDao {
-
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param  主键
-     * @return 实例对象
-     */
-    Config queryById( );
-
     /**
      * 查询指定行数据
      *
@@ -53,13 +44,4 @@ public interface ConfigDao {
      * @return 影响行数
      */
     int update(Config config);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param  主键
-     * @return 影响行数
-     */
-    int deleteById( );
-
 }

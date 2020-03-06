@@ -12,14 +12,6 @@ import java.util.List;
 public interface ConfigService {
 
     /**
-     * 通过ID查询单条数据
-     *
-     * @param  主键
-     * @return 实例对象
-     */
-    Config queryById( );
-
-    /**
      * 查询多条数据
      *
      * @param offset 查询起始位置
@@ -43,13 +35,5 @@ public interface ConfigService {
      * @return 实例对象
      */
     Config update(Config config);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param  主键
-     * @return 是否成功
-     */
-    boolean deleteById( );
 
 }

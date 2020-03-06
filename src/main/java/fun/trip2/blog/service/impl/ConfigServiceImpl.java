@@ -18,18 +18,7 @@ import java.util.List;
 public class ConfigServiceImpl implements ConfigService {
     @Resource
     private ConfigDao configDao;
-
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param  主键
-     * @return 实例对象
-     */
-    @Override
-    public Config queryById( ) {
-        return this.configDao.queryById();
-    }
-
+    
     /**
      * 查询多条数据
      *
@@ -63,7 +52,7 @@ public class ConfigServiceImpl implements ConfigService {
     @Override
     public Config update(Config config) {
         this.configDao.update(config);
-        return this.queryById(config.get());
+        return this.queryById(config.);
     }
 
     /**
