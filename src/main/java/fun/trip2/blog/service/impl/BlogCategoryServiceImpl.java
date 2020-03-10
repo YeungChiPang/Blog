@@ -1,7 +1,7 @@
 package fun.trip2.blog.service.impl;
 
-import fun.trip2.blog.entity.BlogCategory;
 import fun.trip2.blog.dao.BlogCategoryDao;
+import fun.trip2.blog.entity.BlogCategory;
 import fun.trip2.blog.service.BlogCategoryService;
 import org.springframework.stereotype.Service;
 

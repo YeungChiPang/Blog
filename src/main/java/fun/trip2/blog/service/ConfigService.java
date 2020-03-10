@@ -28,12 +28,4 @@ public interface ConfigService {
      */
     Config insert(Config config);
 
-    /**
-     * 修改数据
-     *
-     * @param config 实例对象
-     * @return 实例对象
-     */
-    Config update(Config config);
-
 }
